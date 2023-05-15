@@ -40,19 +40,5 @@ jobs:
           docker-compose build
           az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          az container create \
-            --resource-group lmsnew \
-            --name lms-container \
-            --registry-login-server ${{ env.ACR_LOGIN_SERVER }} \
-            --registry-username ${{ secrets.REGISTRY_USERNAME }} \
-            --registry-password ${{ secrets.REGISTRY_PASSWORD }} \
-            --dns-name-label lms-new \
-            --ports 80 \
-            --restart-policy Always \
-            --command-line "docker-compose up" \
-            --file docker-compose.yml
-          az container show \
-            --resource-group lmsnew \
-            --name lms-container \
-            --query 'ipAddress.ip' \
-            --output tsv
+          az webapp create --resource-group lmsnew --plan lmsServicePlan --name lmsnew --multicontainer-config-type compose --multicontainer-config-file docker-compose.yml
+  
