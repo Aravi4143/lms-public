@@ -40,5 +40,5 @@ jobs:
           docker-compose build
           az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          az webapp create --resource-group lmsnew --plan lmsServicePlan --name lmsnew --multicontainer-config-type compose --multicontainer-config-file docker-compose.yml
+          az webapp config container set --resource-group lmsnew --name lmsnew --multicontainer-config-type compose --multicontainer-config-file docker-compose.yml
   
