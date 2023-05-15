@@ -51,9 +51,7 @@ jobs:
             --restart-policy Always \
             --command-line "docker-compose up" \
             --file docker-compose.yml \
-            --environment-variables \
-              WEBSITES_ENABLE_APP_SERVICE_STORAGE=false \
-              WEBSITE_RUN_FROM_PACKAGE=https://github.com/Aravi4143/lms-public/archive/refs/heads/main.zip
+            --environment-variables WEBSITES_ENABLE_APP_SERVICE_STORAGE=false WEBSITE_RUN_FROM_PACKAGE=https://github.com/Aravi4143/lms-public/archive/refs/heads/main.zip
           az container show \
             --resource-group lmsnew \
             --name lms-container \
