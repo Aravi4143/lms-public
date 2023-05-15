@@ -17,12 +17,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker Compose
-        run: |
-          curl -L "https://github.com/docker/compose/releases/download/2.9.0/docker-compose-$(uname -s)-$(uname -m)" -o docker-compose
-          chmod +x docker-compose
-          sudo mv docker-compose /usr/local/bin/
-
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
         with:
@@ -30,13 +24,16 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build and push Docker images
+      - name: Set up Docker Compose
         env:
           DOCKER_BUILDKIT: 1
           COMPOSE_DOCKER_CLI_BUILD: 1
         run: |
-          /usr/local/bin/docker-compose build
-          /usr/local/bin/docker-compose push
+          curl -L "https://github.com/docker/compose/releases/download/2.9.0/docker-compose-$(uname -s)-$(uname -m)" -o docker-compose
+          chmod +x docker-compose
+          mv docker-compose /usr/local/bin/
+          docker-compose build
+          docker-compose push
 
       - name: Deploy to ACI
         run: |
