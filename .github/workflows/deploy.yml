@@ -3,7 +3,7 @@ name: Deploy to ACI
 on:
   push:
     branches:
-      - main
+      - github-workflow
 
 env:
   ACR_NAME: lmsnewregistry
@@ -32,9 +32,8 @@ jobs:
 
       - name: Build and push Docker images
         run: |
-          cd .
-          export DOCKER_BUILDKIT=1
-          export COMPOSE_DOCKER_CLI_BUILD=1
+          echo "DOCKER_BUILDKIT=1" >> $GITHUB_ENV
+          echo "COMPOSE_DOCKER_CLI_BUILD=1" >> $GITHUB_ENV
           docker-compose build
           docker-compose push
 
