@@ -31,9 +31,10 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Build and push Docker images
+        env:
+          DOCKER_BUILDKIT: 1
+          COMPOSE_DOCKER_CLI_BUILD: 1
         run: |
-          echo "DOCKER_BUILDKIT=1" >> $GITHUB_ENV
-          echo "COMPOSE_DOCKER_CLI_BUILD=1" >> $GITHUB_ENV
           docker-compose build
           docker-compose push
 
