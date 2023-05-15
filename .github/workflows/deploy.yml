@@ -35,8 +35,8 @@ jobs:
           DOCKER_BUILDKIT: 1
           COMPOSE_DOCKER_CLI_BUILD: 1
         run: |
-          docker-compose build
-          docker-compose push
+          /usr/local/bin/docker-compose build
+          /usr/local/bin/docker-compose push
 
       - name: Deploy to ACI
         run: |
