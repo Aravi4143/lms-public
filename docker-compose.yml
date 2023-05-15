@@ -15,9 +15,7 @@ services:
 
   api-server:
     image: lms-public-api
-    build:
-      context: .
-      dockerfile: api/Dockerfile
+    build: api/
     environment:
       - MODE=azure
       - PORT=8080
@@ -30,9 +28,7 @@ services:
 
   web-server:
     image: lms-web
-    build:
-      context: .
-      dockerfile: webapp/Dockerfile
+    build: webapp/
     environment:
       - MODE=azure
       - API_URL=http://localhost:8080
