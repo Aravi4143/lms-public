@@ -41,4 +41,4 @@ jobs:
           az acr create --resource-group lmsnew --name lmsregistry --sku Basic
           az acr login --name lmsregistry
           docker-compose -f docker-compose.yml build
-          az acr build --image lms-web:latest --registry lmsregistry
+          az acr build --image lms-web:{{.Run.ID}} --registry lmsregistry
