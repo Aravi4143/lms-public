@@ -35,10 +35,10 @@ jobs:
           DOCKER_BUILDKIT: 1
           COMPOSE_DOCKER_CLI_BUILD: 1
         run: |
-          git init
           npm install -g npm@9.6.6
           az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az acr create --resource-group lmsnew --name lmsregistry --sku Basic
           az acr login --name lmsregistry
-          az acr build --registry lmsregistry --file docker-compose.yml .
+          docker-compose -f docker-compose.yml build
+          az acr build --image lms-web:latest --registry lmsregistry
