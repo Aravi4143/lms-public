@@ -41,4 +41,4 @@ jobs:
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az acr login --name lmsregistry
           docker-compose build
-          docker-compose -f docker-compose.yml push
+          docker-compose -f docker-compose.yml push --push-option=lmsregistry.azurecr.io
