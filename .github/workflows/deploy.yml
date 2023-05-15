@@ -48,8 +48,9 @@ jobs:
             --registry-login-server ${{ env.ACR_LOGIN_SERVER }} \
             --registry-username ${{ secrets.REGISTRY_USERNAME }} \
             --registry-password ${{ secrets.REGISTRY_PASSWORD }} \
-            --dns-name-label lms-new\
-            --ports 80
+            --dns-name-label lms-new \
+            --ports 80 \
+            --command-line "docker-compose -f docker-compose.yml up"
           az container show \
             --resource-group lmsnew \
             --name lms-container \
