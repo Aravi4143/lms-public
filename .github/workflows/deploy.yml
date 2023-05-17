@@ -30,9 +30,7 @@ jobs:
           az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az acr login --name lmsregistry
-          az acr build --image lms-public-api:{{.Run.ID}} --registry lmsregistry ./api/
-          az webapp config container set --name lms-web-v2 --resource-group lmsnew  --docker-custom-image-name lmsregistry.azurecr.io/lms-public-api:{{.Run.ID}}
-          echo {{.Run.ID}}
-          az acr build --image lms-web:{{.Run.ID}} --registry lmsregistry ./webapp/
-          az webapp config container set --name lmsnew --resource-group lmsnew  --docker-custom-image-name lmsregistry.azurecr.io/lms-web:{{.Run.ID}}
-          echo {{.Run.ID}}
+          az acr build --image lms-public-api:latest --registry lmsregistry ./api/
+          az webapp config container set --name lms-web-v2 --resource-group lmsnew  --docker-custom-image-name lmsregistry.azurecr.io/lms-public-api:latest
+          az acr build --image lms-web:latest --registry lmsregistry ./webapp/
+          az webapp config container set --name lmsnew --resource-group lmsnew  --docker-custom-image-name lmsregistry.azurecr.io/lms-web:latest
