@@ -40,4 +40,5 @@ jobs:
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az acr login --name lmsregistry
           docker-compose -f docker-compose.yml build
+          az acr build --image lms-public-api:{{.Run.ID}} --registry lmsregistry ./api/
           az acr build --image lms-web:{{.Run.ID}} --registry lmsregistry ./webapp/

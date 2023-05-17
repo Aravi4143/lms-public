@@ -13,10 +13,10 @@ services:
     image: lms-public-api
     build: .
     environment:
-      - MODE=local
-      - PORT=8080
+      - MODE=azure
+      - PORT=8090
       - DATABASE_URL=postgresql://postgres:itjustworks@local-db:5432/mydb
     ports:
-      - "8080:8080"
+      - "8090:8090"
     depends_on:
       - local-db

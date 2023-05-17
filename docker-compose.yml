@@ -18,10 +18,10 @@ services:
     build: api/
     environment:
       - MODE=azure
-      - PORT=8080
+      - PORT=8090
       - DATABASE_URL=postgresql://postgres:itjustworks@local-db:5432/mydb
     ports:
-      - "8080:8080"
+      - "8090:8090"
     restart: on-failure
     depends_on:
       - local-db
@@ -31,7 +31,7 @@ services:
     build: webapp/
     environment:
       - MODE=azure
-      - API_URL=http://localhost:8080
+      - API_URL=https://lms-web-v2.azurewebsites.net:8090
     ports:
       - "80:80"
     depends_on:
