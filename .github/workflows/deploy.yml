@@ -24,21 +24,13 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Set up Docker Compose
-        run: |
-          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o docker-compose
-          chmod +x docker-compose
-          sudo mv docker-compose /usr/local/bin/
-
       - name: Build and push Docker images and Deploy to ACI
-        env:
-          DOCKER_BUILDKIT: 1
-          COMPOSE_DOCKER_CLI_BUILD: 1
         run: |
           npm install -g npm@9.6.6
           az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az acr login --name lmsregistry
-          docker-compose -f docker-compose.yml build
           az acr build --image lms-public-api:{{.Run.ID}} --registry lmsregistry ./api/
+          az webapp config container set --name lms-web-v2 --resource-group lmsnew  --docker-custom-image-name lmsregistry.azurecr.io/lms-public-api:{{.Run.ID}}
           az acr build --image lms-web:{{.Run.ID}} --registry lmsregistry ./webapp/
+          az webapp config container set --name lmsnew --resource-group lmsnew  --docker-custom-image-name lmsregistry.azurecr.io/lms-web:{{.Run.ID}}
