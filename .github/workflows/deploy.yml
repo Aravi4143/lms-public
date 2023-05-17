@@ -32,5 +32,7 @@ jobs:
           az acr login --name lmsregistry
           az acr build --image lms-public-api:{{.Run.ID}} --registry lmsregistry ./api/
           az webapp config container set --name lms-web-v2 --resource-group lmsnew  --docker-custom-image-name lmsregistry.azurecr.io/lms-public-api:{{.Run.ID}}
+          echo {{.Run.ID}}
           az acr build --image lms-web:{{.Run.ID}} --registry lmsregistry ./webapp/
           az webapp config container set --name lmsnew --resource-group lmsnew  --docker-custom-image-name lmsregistry.azurecr.io/lms-web:{{.Run.ID}}
+          echo {{.Run.ID}}
